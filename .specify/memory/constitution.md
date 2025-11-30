@@ -2,27 +2,19 @@
 ===============================================================================
 SYNC IMPACT REPORT
 ===============================================================================
-Version change: N/A → 1.0.0 (Initial adoption)
+Version change: 1.0.0 → 1.1.0 (Minor - New principle added)
 
-Modified principles: None (Initial adoption)
+Modified principles: None
 
 Added sections:
-- Core Principles (6 principles)
-  - I. Component-First Architecture
-  - II. Type Safety First
-  - III. Test-Driven Development (NON-NEGOTIABLE)
-  - IV. Accessibility by Default (NON-NEGOTIABLE)
-  - V. Security-First Development (NON-NEGOTIABLE)
-  - VI. Performance Optimization
-- Technology Stack
-- Development Workflow
+- VII. Neo Brutalism Design System
 
-Removed sections: None (Initial adoption)
+Removed sections: None
 
 Templates requiring updates:
-- ✅ plan-template.md (Constitution Check aligned)
-- ✅ spec-template.md (Requirements aligned)
-- ✅ tasks-template.md (Task categories aligned)
+- ✅ plan-template.md (Constitution Check - add VII principle row)
+- ⚠️ spec-template.md (No changes needed - design is implementation detail)
+- ⚠️ tasks-template.md (No changes needed - styling tasks covered by existing structure)
 
 Follow-up TODOs: None
 ===============================================================================
@@ -120,6 +112,51 @@ Applications MUST meet Core Web Vitals standards:
 
 **Rationale**: Performance directly impacts user experience, SEO, and conversion rates.
 
+### VII. Neo Brutalism Design System
+
+All UI components MUST follow the Neo Brutalism (新粗野/新野獸) design language with these mandatory specifications:
+
+- **Border Style**:
+  - All interactive elements MUST have solid black borders (`3px solid #000000`).
+  - Border radius MUST be `0px` or minimal (`4px` maximum) to maintain sharp edges.
+- **Shadow Style**:
+  - Hard shadows MUST be used: `4px 4px 0px #000000` (no blur, no spread).
+  - Shadows MUST shift on interaction (hover: `2px 2px`, active: `0px 0px`).
+- **Color Palette**:
+  - Primary colors MUST be high-saturation, bold hues (e.g., `#FF6B6B`, `#4ECDC4`, `#FFE66D`).
+  - Background MUST use warm neutral (`#FEF6E4`) or pure white.
+  - Text MUST be pure black (`#000000`) for maximum contrast.
+- **Typography**:
+  - Font weight MUST be bold (`700`) or black (`900`) for headings and buttons.
+  - Prefer sans-serif system fonts or geometric typefaces.
+- **Interactive States**:
+  - Hover: Element MUST translate toward shadow (`transform: translate(2px, 2px)`), shadow reduces.
+  - Active: Element MUST translate fully into shadow position, shadow disappears.
+  - Focus: MUST show high-contrast outline (`3px solid` accent color, `2px offset`).
+- **Accessibility Integration**:
+  - All color combinations MUST meet WCAG 2.1 AA contrast ratios (4.5:1 minimum).
+  - Black text on bright backgrounds naturally satisfies this requirement.
+  - Focus indicators MUST be visible and distinct.
+
+**CSS Variables Standard**:
+```css
+:root {
+  --nb-primary: #FF6B6B;
+  --nb-secondary: #4ECDC4;
+  --nb-accent: #FFE66D;
+  --nb-background: #FEF6E4;
+  --nb-surface: #FFFFFF;
+  --nb-text: #000000;
+  --nb-border: #000000;
+  --nb-border-width: 3px;
+  --nb-shadow: 4px 4px 0px #000000;
+  --nb-radius: 0px;
+  --nb-transition: all 0.1s ease;
+}
+```
+
+**Rationale**: Neo Brutalism creates a bold, memorable visual identity with high accessibility inherent in its high-contrast design. The consistent design language reduces decision fatigue and ensures visual coherence across the application.
+
 ## Technology Stack
 
 The following technologies form the foundation of this project:
@@ -185,4 +222,4 @@ This Constitution supersedes all other development practices for this project. A
 - Constitution document: English
 - Specifications, plans, and user-facing documentation: Traditional Chinese (zh-TW)
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-30 | **Last Amended**: 2025-11-30
+**Version**: 1.1.0 | **Ratified**: 2025-11-30 | **Last Amended**: 2025-11-30

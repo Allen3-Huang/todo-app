@@ -39,6 +39,7 @@
 | IV. Accessibility by Default | ⬜ | Semantic HTML, keyboard nav, ARIA, color contrast |
 | V. Security-First Development | ⬜ | XSS prevention, secure data handling, npm audit passed |
 | VI. Performance Optimization | ⬜ | Bundle analysis, lazy loading, Core Web Vitals targets |
+| VII. Neo Brutalism Design | ⬜ | 3px black borders, hard shadows, bold colors, WCAG contrast |
 
 **Legend**: ⬜ Not Checked | ✅ Compliant | ⚠️ Justified Exception | ❌ Violation
 
