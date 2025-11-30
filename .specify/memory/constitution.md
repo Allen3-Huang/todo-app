@@ -124,17 +124,17 @@ Applications MUST meet Core Web Vitals standards:
 
 The following technologies form the foundation of this project:
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| Framework | React | 19.2+ |
-| Language | TypeScript | 5.9+ |
-| Build Tool | Vite | 7.x |
-| Styling | CSS Modules / Tailwind CSS | - |
-| Testing | Vitest + React Testing Library | - |
-| Linting | ESLint + TypeScript ESLint | 9.x |
-| Formatting | Prettier | - |
-| HTTP Client | Fetch API / TanStack Query | - |
-| State Management | React Context / Zustand | - |
+| Category         | Technology                     | Version |
+| ---------------- | ------------------------------ | ------- |
+| Framework        | React                          | 19.2+   |
+| Language         | TypeScript                     | 5.9+    |
+| Build Tool       | Vite                           | 7.x     |
+| Styling          | CSS Modules / Tailwind CSS     | -       |
+| Testing          | Vitest + React Testing Library | -       |
+| Linting          | ESLint + TypeScript ESLint     | 9.x     |
+| Formatting       | Prettier                       | -       |
+| HTTP Client      | Fetch API / TanStack Query     | -       |
+| State Management | React Context / Zustand        | -       |
 
 **Stack Decisions**:
 - Vite provides fast HMR and optimized builds for React 19.
