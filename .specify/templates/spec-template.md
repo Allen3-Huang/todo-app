@@ -95,6 +95,32 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Accessibility Requirements (Constitution IV - NON-NEGOTIABLE)
+
+<!--
+  These requirements are mandated by the Constitution.
+  Customize based on feature-specific accessibility needs.
+-->
+
+- **AR-001**: All interactive elements MUST be keyboard accessible
+- **AR-002**: All form inputs MUST have associated labels
+- **AR-003**: Error messages MUST be announced to screen readers
+- **AR-004**: Color MUST NOT be the only means of conveying information
+- **AR-005**: All images MUST have appropriate alt text
+
+### Security Requirements (Constitution V - NON-NEGOTIABLE)
+
+<!--
+  These requirements are mandated by the Constitution.
+  Customize based on feature-specific security needs.
+-->
+
+- **SR-001**: All user input MUST be validated and sanitized
+- **SR-002**: Sensitive data MUST NOT be stored in localStorage
+- **SR-003**: All API calls MUST use HTTPS
+- **SR-004**: User-generated content MUST be escaped to prevent XSS
+- **SR-005**: Authentication tokens MUST be stored in httpOnly cookies
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]

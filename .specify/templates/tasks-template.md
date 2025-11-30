@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: Per Constitution III (Test-Driven Development), tests are MANDATORY. Tests MUST be written first and verified to FAIL before implementation.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -79,23 +79,24 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 (Constitution III - Mandatory) ⚠️
 
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+> **NOTE: Write these tests FIRST, ensure they FAIL before implementation (TDD mandatory per Constitution III)**
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T010 [P] [US1] Component test for [component] in src/components/[name]/__tests__/
+- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/
+- [ ] T012 [P] [US1] Accessibility test with axe-core (Constitution IV)
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T013 [P] [US1] Create [Component1] in src/components/[name1]/
+- [ ] T014 [P] [US1] Create [Component2] in src/components/[name2]/
+- [ ] T015 [US1] Implement custom hook in src/hooks/use[Name].ts (depends on T013, T014)
+- [ ] T016 [US1] Add TypeScript interfaces in src/types/[name].ts (Constitution II)
+- [ ] T017 [US1] Add accessibility attributes (ARIA, keyboard nav) (Constitution IV)
+- [ ] T018 [US1] Validate user input and sanitize content (Constitution V)
 
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**Checkpoint**: At this point, User Story 1 should be fully functional, accessible, and testable independently
 
 ---
 
@@ -105,17 +106,19 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 2 (Constitution III - Mandatory) ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+
+- [ ] T018 [P] [US2] Component test for [component] in src/components/[name]/__tests__/
+- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T020 [P] [US2] Create [Component] in src/components/[name]/
+- [ ] T021 [US2] Implement hook/service in src/hooks/ or src/services/
+- [ ] T022 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T023 [US2] Add accessibility attributes (ARIA, keyboard nav)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -127,16 +130,16 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 3 (Constitution III - Mandatory) ⚠️
 
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T024 [P] [US3] Component test for [component] in src/components/[name]/__tests__/
+- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T026 [P] [US3] Create [Component] in src/components/[name]/
+- [ ] T027 [US3] Implement hook/service in src/hooks/ or src/services/
+- [ ] T028 [US3] Add accessibility attributes (ARIA, keyboard nav)
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -146,15 +149,45 @@ Examples of foundational tasks (adjust based on your project):
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## Phase N-1: Security & Accessibility Audit (Constitution IV & V - NON-NEGOTIABLE)
 
-**Purpose**: Improvements that affect multiple user stories
+**Purpose**: Verify compliance with Constitution security and accessibility principles
+
+### Security Audit Tasks (Constitution V)
+
+- [ ] TXXX Verify no sensitive data in localStorage
+- [ ] TXXX Verify all user inputs are sanitized
+- [ ] TXXX Run `npm audit` and resolve critical vulnerabilities
+- [ ] TXXX Verify HTTPS for all API calls
+- [ ] TXXX Check for XSS vulnerabilities in dynamic content
+
+### Accessibility Audit Tasks (Constitution IV)
+
+- [ ] TXXX Run axe-core automated accessibility tests
+- [ ] TXXX Verify keyboard navigation for all interactive elements
+- [ ] TXXX Verify color contrast ratios meet WCAG 2.1 AA
+- [ ] TXXX Test with screen reader for critical user flows
+- [ ] TXXX Verify all images have alt text
+
+---
+
+## Phase N: Polish & Performance Optimization (Constitution VI)
+
+**Purpose**: Improvements that affect multiple user stories and meet performance targets
+
+### Performance Tasks
+
+- [ ] TXXX Analyze bundle size with build tools
+- [ ] TXXX Implement code splitting for routes
+- [ ] TXXX Implement lazy loading for heavy components
+- [ ] TXXX Optimize images (WebP/AVIF, lazy loading)
+- [ ] TXXX Measure Core Web Vitals (LCP < 2.5s, FID < 100ms, CLS < 0.1)
+
+### Polish Tasks
 
 - [ ] TXXX [P] Documentation updates in docs/
 - [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
+- [ ] TXXX [P] Additional unit tests in tests/unit/
 - [ ] TXXX Run quickstart.md validation
 
 ---
@@ -168,7 +201,8 @@ Examples of foundational tasks (adjust based on your project):
 - **User Stories (Phase 3+)**: All depend on Foundational phase completion
   - User stories can then proceed in parallel (if staffed)
   - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
+- **Security & Accessibility Audit (Phase N-1)**: After all user stories complete
+- **Performance & Polish (Final Phase)**: After audit phase
 
 ### User Story Dependencies
 
@@ -176,12 +210,12 @@ Examples of foundational tasks (adjust based on your project):
 - **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
 - **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
 
-### Within Each User Story
+### Within Each User Story (Constitution III - TDD)
 
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
+- Tests MUST be written and FAIL before implementation
+- Components must be typed (Constitution II)
+- Components must be accessible (Constitution IV)
+- Security considerations must be addressed (Constitution V)
 - Story complete before moving to next priority
 
 ### Parallel Opportunities
@@ -190,7 +224,7 @@ Examples of foundational tasks (adjust based on your project):
 - All Foundational tasks marked [P] can run in parallel (within Phase 2)
 - Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
 - All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
+- Components within a story marked [P] can run in parallel
 - Different user stories can be worked on in parallel by different team members
 
 ---
@@ -198,13 +232,13 @@ Examples of foundational tasks (adjust based on your project):
 ## Parallel Example: User Story 1
 
 ```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+# Launch all tests for User Story 1 together (TDD - Constitution III):
+Task: "Component test for [component] in src/components/[name]/__tests__/"
+Task: "Integration test for [user journey] in tests/integration/"
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+# Launch all components for User Story 1 together:
+Task: "Create [Component1] in src/components/[name1]/"
+Task: "Create [Component2] in src/components/[name2]/"
 ```
 
 ---
@@ -215,8 +249,8 @@ Task: "Create [Entity2] model in src/models/[entity2].py"
 
 1. Complete Phase 1: Setup
 2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
+3. Complete Phase 3: User Story 1 (with tests first - Constitution III)
+4. **STOP and VALIDATE**: Test User Story 1 independently (including accessibility)
 5. Deploy/demo if ready
 
 ### Incremental Delivery
@@ -225,7 +259,9 @@ Task: "Create [Entity2] model in src/models/[entity2].py"
 2. Add User Story 1 → Test independently → Deploy/Demo (MVP!)
 3. Add User Story 2 → Test independently → Deploy/Demo
 4. Add User Story 3 → Test independently → Deploy/Demo
-5. Each story adds value without breaking previous stories
+5. Security & Accessibility Audit → Remediate issues
+6. Performance Optimization → Meet Core Web Vitals targets
+7. Each story adds value without breaking previous stories
 
 ### Parallel Team Strategy
 
@@ -237,6 +273,7 @@ With multiple developers:
    - Developer B: User Story 2
    - Developer C: User Story 3
 3. Stories complete and integrate independently
+4. Team performs Security & Accessibility Audit together
 
 ---
 
@@ -245,7 +282,10 @@ With multiple developers:
 - [P] tasks = different files, no dependencies
 - [Story] label maps task to specific user story for traceability
 - Each user story should be independently completable and testable
-- Verify tests fail before implementing
+- **Constitution III**: Verify tests fail before implementing (TDD mandatory)
+- **Constitution IV**: Include accessibility tasks for each component
+- **Constitution V**: Include security verification tasks
+- **Constitution VI**: Include performance measurement tasks
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence

@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+| Principle | Status | Notes |
+|-----------|--------|-------|
+| I. Component-First Architecture | ⬜ | Components are self-contained, functional, <200 lines |
+| II. Type Safety First | ⬜ | Strict TypeScript, explicit types, no implicit any |
+| III. Test-Driven Development | ⬜ | Tests written first, RTL for components, axe-core included |
+| IV. Accessibility by Default | ⬜ | Semantic HTML, keyboard nav, ARIA, color contrast |
+| V. Security-First Development | ⬜ | XSS prevention, secure data handling, npm audit passed |
+| VI. Performance Optimization | ⬜ | Bundle analysis, lazy loading, Core Web Vitals targets |
+
+**Legend**: ⬜ Not Checked | ✅ Compliant | ⚠️ Justified Exception | ❌ Violation
 
 ## Project Structure
 
