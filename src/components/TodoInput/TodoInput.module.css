@@ -1,0 +1,25 @@
+.form {
+    display: flex;
+}
+
+.input {
+    width: 100%;
+    min-height: 44px;
+    padding: var(--nb-space-md);
+    font-size: 1.25rem;
+    color: var(--nb-text);
+    background-color: var(--nb-surface);
+    border: none;
+    border-bottom: var(--nb-border-width) solid var(--nb-border);
+    transition: var(--nb-transition);
+}
+
+.input:focus {
+    outline: none;
+    background-color: var(--nb-background);
+}
+
+.input::placeholder {
+    color: var(--nb-text-muted);
+    font-style: italic;
+}

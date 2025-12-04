@@ -1,0 +1,13 @@
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.item {
+    border-bottom: var(--nb-border-width) solid var(--nb-border);
+}
+
+.item:last-child {
+    border-bottom: none;
+}

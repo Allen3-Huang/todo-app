@@ -1,0 +1,60 @@
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nb-space-md);
+    padding: var(--nb-space-md) var(--nb-space-lg);
+    background-color: var(--nb-surface);
+    border: var(--nb-border-width) solid var(--nb-border);
+    border-radius: var(--nb-radius);
+    box-shadow: var(--nb-shadow);
+    flex-wrap: wrap;
+}
+
+.count {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--nb-text-muted);
+    min-width: 100px;
+}
+
+.clearButton {
+    padding: var(--nb-space-xs) var(--nb-space-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--nb-text);
+    background-color: var(--nb-surface);
+    border: var(--nb-border-width) solid var(--nb-border);
+    border-radius: var(--nb-radius);
+    cursor: pointer;
+    transition: transform var(--nb-transition), box-shadow var(--nb-transition), background-color var(--nb-transition);
+    box-shadow: var(--nb-shadow-sm);
+}
+
+.clearButton:hover {
+    background-color: var(--nb-danger);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--nb-border);
+}
+
+.clearButton:focus {
+    outline: 2px solid var(--nb-accent);
+    outline-offset: 2px;
+}
+
+.clearButton:active {
+    transform: translate(0, 0);
+    box-shadow: none;
+}
+
+@media (max-width: 480px) {
+    .footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--nb-space-sm);
+    }
+
+    .count {
+        text-align: center;
+    }
+}
