@@ -76,6 +76,43 @@ describe('TodoInput', () => {
     })
   })
 
+  describe('disabled state', () => {
+    it('should disable input when disabled prop is true', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} disabled={true} />)
+      
+      const input = screen.getByRole('textbox')
+      expect(input).toBeDisabled()
+    })
+
+    it('should show max limit placeholder when disabled', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} disabled={true} />)
+      
+      expect(screen.getByPlaceholderText(/已達到待辦事項上限/i)).toBeInTheDocument()
+    })
+
+    it('should not call onAdd when disabled even if text is valid', async () => {
+      const user = userEvent.setup()
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} disabled={true} />)
+      
+      const input = screen.getByRole('textbox')
+      // Note: disabled inputs don't accept typing, but form submission should still be blocked
+      await user.type(input, '買牛奶{enter}')
+      
+      expect(onAdd).not.toHaveBeenCalled()
+    })
+
+    it('should be enabled by default', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} />)
+      
+      const input = screen.getByRole('textbox')
+      expect(input).not.toBeDisabled()
+    })
+  })
+
   describe('accessibility', () => {
     it('should have no accessibility violations', async () => {
       const onAdd = vi.fn()

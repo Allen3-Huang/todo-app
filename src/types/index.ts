@@ -73,6 +73,8 @@ export type TodoStore = TodoState & TodoActions
 export interface TodoInputProps {
   /** 新增 todo 的回呼函式 */
   onAdd: (text: string) => void
+  /** 是否禁用輸入（達到最大數量限制時） */
+  disabled?: boolean
 }
 
 /**

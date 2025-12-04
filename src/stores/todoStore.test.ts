@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useTodoStore, selectFilteredTodos, selectActiveCount, selectHasCompleted } from './todoStore'
+import { useTodoStore, selectFilteredTodos, selectActiveCount, selectHasCompleted, selectIsMaxTodoReached, MAX_TODO_COUNT } from './todoStore'
 
 describe('todoStore', () => {
   beforeEach(() => {
@@ -82,6 +82,47 @@ describe('todoStore', () => {
       
       const { todos } = useTodoStore.getState()
       expect(todos).toHaveLength(0)
+    })
+
+    it('should not add todo when max limit is reached', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      // 新增 5 個 todo（達到上限）
+      for (let i = 1; i <= MAX_TODO_COUNT; i++) {
+        addTodo(`Todo ${i}`)
+      }
+      
+      const { todos: before } = useTodoStore.getState()
+      expect(before).toHaveLength(MAX_TODO_COUNT)
+      
+      // 嘗試新增第 6 個 todo
+      addTodo('This should not be added')
+      
+      const { todos: after } = useTodoStore.getState()
+      expect(after).toHaveLength(MAX_TODO_COUNT)
+      expect(after.find(t => t.text === 'This should not be added')).toBeUndefined()
+    })
+
+    it('should allow adding todo after deleting when at max limit', () => {
+      const { addTodo, deleteTodo } = useTodoStore.getState()
+      
+      // 新增 5 個 todo
+      for (let i = 1; i <= MAX_TODO_COUNT; i++) {
+        addTodo(`Todo ${i}`)
+      }
+      
+      const { todos } = useTodoStore.getState()
+      expect(todos).toHaveLength(MAX_TODO_COUNT)
+      
+      // 刪除一個 todo
+      deleteTodo(todos[0].id)
+      
+      // 現在應該可以新增
+      addTodo('New Todo')
+      
+      const { todos: after } = useTodoStore.getState()
+      expect(after).toHaveLength(MAX_TODO_COUNT)
+      expect(after.find(t => t.text === 'New Todo')).toBeDefined()
     })
   })
 
@@ -358,6 +399,48 @@ describe('todoStore', () => {
     it('should return false when todos is empty', () => {
       const state = useTodoStore.getState()
       expect(selectHasCompleted(state)).toBe(false)
+    })
+  })
+
+  describe('selectIsMaxTodoReached', () => {
+    it('should return false when todos count is less than max', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      addTodo('Todo 1')
+      addTodo('Todo 2')
+      
+      const state = useTodoStore.getState()
+      expect(selectIsMaxTodoReached(state)).toBe(false)
+    })
+
+    it('should return true when todos count equals max', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      for (let i = 1; i <= MAX_TODO_COUNT; i++) {
+        addTodo(`Todo ${i}`)
+      }
+      
+      const state = useTodoStore.getState()
+      expect(selectIsMaxTodoReached(state)).toBe(true)
+    })
+
+    it('should return false when todos is empty', () => {
+      const state = useTodoStore.getState()
+      expect(selectIsMaxTodoReached(state)).toBe(false)
+    })
+
+    it('should return false after deleting from max limit', () => {
+      const { addTodo, deleteTodo } = useTodoStore.getState()
+      
+      for (let i = 1; i <= MAX_TODO_COUNT; i++) {
+        addTodo(`Todo ${i}`)
+      }
+      
+      const { todos } = useTodoStore.getState()
+      deleteTodo(todos[0].id)
+      
+      const state = useTodoStore.getState()
+      expect(selectIsMaxTodoReached(state)).toBe(false)
     })
   })
 })
