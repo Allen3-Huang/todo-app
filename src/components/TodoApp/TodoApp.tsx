@@ -88,7 +88,7 @@ export function TodoApp() {
 
       <ConfirmDialog
         isOpen={deleteTarget !== null}
-        title="確認刪除"
+        title="確認刪除?"
         description={deleteTarget ? `確定要刪除「${deleteTarget.text}」嗎？此操作無法復原。` : ''}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
