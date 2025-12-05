@@ -7,11 +7,13 @@ import styles from './TodoInput.module.css'
  * 使用 uncontrolled form 避免 IME 問題
  * @see component-contracts.md
  */
-export function TodoInput({ onAdd }: TodoInputProps) {
+export function TodoInput({ onAdd, disabled = false }: TodoInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
+    
+    if (disabled) return
     
     const text = inputRef.current?.value.trim()
     if (!text) return
@@ -26,9 +28,10 @@ export function TodoInput({ onAdd }: TodoInputProps) {
         ref={inputRef}
         type="text"
         className={styles.input}
-        placeholder="What needs to be done?"
+        placeholder={disabled ? '已達到最大數量限制 (5)' : 'What needs to be done?'}
         aria-label="新增待辦事項"
         autoFocus
+        disabled={disabled}
       />
     </form>
   )

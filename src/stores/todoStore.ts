@@ -3,6 +3,11 @@ import { persist, devtools } from 'zustand/middleware'
 import type { Todo, TodoState, TodoStore, FilterType } from '../types'
 
 /**
+ * 待辦事項最大數量限制
+ */
+export const MAX_TODOS = 5
+
+/**
  * Todo Store - Zustand 狀態管理
  * @see store-contract.md
  */
@@ -18,6 +23,10 @@ export const useTodoStore = create<TodoStore>()(
         addTodo: (text: string) => {
           const trimmed = text.trim()
           if (!trimmed) return
+
+          // 檢查是否已達到最大數量限制
+          const currentTodos = get().todos
+          if (currentTodos.length >= MAX_TODOS) return
 
           const newTodo: Todo = {
             id: crypto.randomUUID(),
@@ -141,3 +150,9 @@ export const selectHasCompleted = (state: TodoState): boolean =>
  * Selector: 總項目數量
  */
 export const selectTotalCount = (state: TodoState): number => state.todos.length
+
+/**
+ * Selector: 是否可以新增更多項目
+ */
+export const selectCanAddTodo = (state: TodoState): boolean =>
+  state.todos.length < MAX_TODOS
