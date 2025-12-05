@@ -76,10 +76,43 @@ describe('TodoInput', () => {
     })
   })
 
+  describe('disabled state', () => {
+    it('should disable input when disabled prop is true', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} disabled={true} />)
+      
+      const input = screen.getByRole('textbox')
+      expect(input).toBeDisabled()
+    })
+
+    it('should show limit message in placeholder when disabled', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} disabled={true} />)
+      
+      expect(screen.getByPlaceholderText(/已達到最大數量限制/i)).toBeInTheDocument()
+    })
+
+    it('should not be disabled by default', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} />)
+      
+      const input = screen.getByRole('textbox')
+      expect(input).not.toBeDisabled()
+    })
+  })
+
   describe('accessibility', () => {
     it('should have no accessibility violations', async () => {
       const onAdd = vi.fn()
       const { container } = render(<TodoInput onAdd={onAdd} />)
+      
+      const results = await axe(container)
+      expect(results).toHaveNoViolations()
+    })
+
+    it('should have no accessibility violations when disabled', async () => {
+      const onAdd = vi.fn()
+      const { container } = render(<TodoInput onAdd={onAdd} disabled={true} />)
       
       const results = await axe(container)
       expect(results).toHaveNoViolations()
