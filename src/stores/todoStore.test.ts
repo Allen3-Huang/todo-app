@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useTodoStore, selectFilteredTodos, selectActiveCount, selectHasCompleted } from './todoStore'
+import { useTodoStore, selectFilteredTodos, selectActiveCount, selectHasCompleted, selectIsAtLimit } from './todoStore'
 
 describe('todoStore', () => {
   beforeEach(() => {
@@ -82,6 +82,27 @@ describe('todoStore', () => {
       
       const { todos } = useTodoStore.getState()
       expect(todos).toHaveLength(0)
+    })
+
+    it('should not add todo when limit of 5 is reached', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      // 新增 5 個 todo
+      addTodo('Todo 1')
+      addTodo('Todo 2')
+      addTodo('Todo 3')
+      addTodo('Todo 4')
+      addTodo('Todo 5')
+      
+      const { todos: beforeLimit } = useTodoStore.getState()
+      expect(beforeLimit).toHaveLength(5)
+      
+      // 嘗試新增第 6 個 todo（應該失敗）
+      addTodo('Todo 6')
+      
+      const { todos: afterLimit } = useTodoStore.getState()
+      expect(afterLimit).toHaveLength(5)
+      expect(afterLimit.every(t => t.text !== 'Todo 6')).toBe(true)
     })
   })
 
@@ -358,6 +379,52 @@ describe('todoStore', () => {
     it('should return false when todos is empty', () => {
       const state = useTodoStore.getState()
       expect(selectHasCompleted(state)).toBe(false)
+    })
+  })
+
+  describe('selectIsAtLimit', () => {
+    it('should return false when there are less than 5 todos', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      addTodo('Todo 1')
+      addTodo('Todo 2')
+      
+      const state = useTodoStore.getState()
+      expect(selectIsAtLimit(state)).toBe(false)
+    })
+
+    it('should return true when there are exactly 5 todos', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      addTodo('Todo 1')
+      addTodo('Todo 2')
+      addTodo('Todo 3')
+      addTodo('Todo 4')
+      addTodo('Todo 5')
+      
+      const state = useTodoStore.getState()
+      expect(selectIsAtLimit(state)).toBe(true)
+    })
+
+    it('should return false when todos is empty', () => {
+      const state = useTodoStore.getState()
+      expect(selectIsAtLimit(state)).toBe(false)
+    })
+
+    it('should return false when a todo is deleted from 5 todos', () => {
+      const { addTodo, deleteTodo } = useTodoStore.getState()
+      
+      addTodo('Todo 1')
+      addTodo('Todo 2')
+      addTodo('Todo 3')
+      addTodo('Todo 4')
+      addTodo('Todo 5')
+      
+      const { todos } = useTodoStore.getState()
+      deleteTodo(todos[0].id)
+      
+      const state = useTodoStore.getState()
+      expect(selectIsAtLimit(state)).toBe(false)
     })
   })
 })

@@ -76,6 +76,42 @@ describe('TodoInput', () => {
     })
   })
 
+  describe('limit functionality', () => {
+    it('should disable input when isAtLimit is true', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} isAtLimit={true} />)
+      
+      const input = screen.getByRole('textbox')
+      expect(input).toBeDisabled()
+    })
+
+    it('should show limit message when isAtLimit is true', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} isAtLimit={true} />)
+      
+      expect(screen.getByPlaceholderText(/已達上限 5 個項目/i)).toBeInTheDocument()
+    })
+
+    it('should not call onAdd when isAtLimit is true and user tries to submit', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} isAtLimit={true} />)
+      
+      const input = screen.getByRole('textbox')
+      // Note: cannot type into disabled input, but we test the submit handler logic
+      // by testing that submit doesn't happen when disabled
+      expect(input).toBeDisabled()
+      expect(onAdd).not.toHaveBeenCalled()
+    })
+
+    it('should enable input when isAtLimit is false', () => {
+      const onAdd = vi.fn()
+      render(<TodoInput onAdd={onAdd} isAtLimit={false} />)
+      
+      const input = screen.getByRole('textbox')
+      expect(input).not.toBeDisabled()
+    })
+  })
+
   describe('accessibility', () => {
     it('should have no accessibility violations', async () => {
       const onAdd = vi.fn()

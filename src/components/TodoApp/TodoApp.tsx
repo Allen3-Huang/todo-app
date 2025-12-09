@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
-import { useTodoStore, selectActiveCount, selectHasCompleted, selectTotalCount } from '../../stores/todoStore'
+import { useTodoStore, selectActiveCount, selectHasCompleted, selectTotalCount, selectIsAtLimit } from '../../stores/todoStore'
 import { TodoInput } from '../TodoInput/TodoInput'
 import { TodoList } from '../TodoList/TodoList'
 import { TodoFooter } from '../TodoFooter/TodoFooter'
@@ -39,6 +39,7 @@ export function TodoApp() {
   const activeCount = useTodoStore(selectActiveCount)
   const hasCompleted = useTodoStore(selectHasCompleted)
   const hasTodos = useTodoStore(selectTotalCount) > 0
+  const isAtLimit = useTodoStore(selectIsAtLimit)
 
   // 刪除確認對話框狀態
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; text: string } | null>(null)
@@ -68,7 +69,7 @@ export function TodoApp() {
       </header>
 
       <main className={styles.main}>
-        <TodoInput onAdd={addTodo} />
+        <TodoInput onAdd={addTodo} isAtLimit={isAtLimit} />
         <TodoList
           todos={todos}
           onToggle={toggleTodo}
