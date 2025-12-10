@@ -19,6 +19,10 @@ export const useTodoStore = create<TodoStore>()(
           const trimmed = text.trim()
           if (!trimmed) return
 
+          // 限制最多五筆待辦事項
+          const currentTodos = get().todos
+          if (currentTodos.length >= 5) return
+
           const newTodo: Todo = {
             id: crypto.randomUUID(),
             text: trimmed,
@@ -141,3 +145,8 @@ export const selectHasCompleted = (state: TodoState): boolean =>
  * Selector: 總項目數量
  */
 export const selectTotalCount = (state: TodoState): number => state.todos.length
+
+/**
+ * Selector: 是否達到新增上限（5筆）
+ */
+export const selectIsAtLimit = (state: TodoState): boolean => state.todos.length >= 5
