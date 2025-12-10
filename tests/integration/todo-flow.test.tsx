@@ -283,4 +283,71 @@ describe('Todo App Integration', () => {
       expect(results).toHaveNoViolations()
     })
   })
+
+  describe('todo limit', () => {
+    it('should not allow adding more than 5 todos', async () => {
+      const user = userEvent.setup()
+      render(<TodoApp />)
+
+      const input = screen.getByLabelText(/新增待辦事項/i)
+
+      // Add 5 todos
+      for (let i = 1; i <= 5; i++) {
+        await user.type(input, `Todo ${i}`)
+        await user.keyboard('{Enter}')
+      }
+
+      // Verify 5 todos are added
+      expect(screen.getByText('5 項未完成')).toBeInTheDocument()
+
+      // Verify input is now disabled
+      expect(input).toBeDisabled()
+      expect(input).toHaveAttribute('placeholder', '已達上限 (5筆)')
+
+      // Try to add 6th todo - should not work
+      await user.type(input, 'Todo 6')
+      await user.keyboard('{Enter}')
+
+      // Still only 5 todos
+      expect(screen.getByText('5 項未完成')).toBeInTheDocument()
+      expect(screen.queryByText('Todo 6')).not.toBeInTheDocument()
+    })
+
+    it('should allow adding after deleting when at limit', async () => {
+      const user = userEvent.setup()
+      render(<TodoApp />)
+
+      const input = screen.getByLabelText(/新增待辦事項/i)
+
+      // Add 5 todos
+      for (let i = 1; i <= 5; i++) {
+        await user.type(input, `Todo ${i}`)
+        await user.keyboard('{Enter}')
+      }
+
+      // Verify input is disabled
+      expect(input).toBeDisabled()
+
+      // Delete one todo
+      const deleteButtons = screen.getAllByRole('button', { name: /刪除/i })
+      await user.click(deleteButtons[0])
+      
+      // Confirm deletion
+      await user.click(screen.getByRole('button', { name: /確認/i }))
+
+      // Input should be enabled again
+      expect(input).not.toBeDisabled()
+      expect(input).toHaveAttribute('placeholder', 'What needs to be done?')
+
+      // Should be able to add a new todo
+      await user.type(input, 'New Todo')
+      await user.keyboard('{Enter}')
+
+      expect(screen.getByText('New Todo')).toBeInTheDocument()
+      expect(screen.getByText('5 項未完成')).toBeInTheDocument()
+      
+      // Input should be disabled again
+      expect(input).toBeDisabled()
+    })
+  })
 })

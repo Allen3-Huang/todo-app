@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useTodoStore, selectFilteredTodos, selectActiveCount, selectHasCompleted } from './todoStore'
+import { useTodoStore, selectFilteredTodos, selectActiveCount, selectHasCompleted, selectIsAtLimit } from './todoStore'
 
 describe('todoStore', () => {
   beforeEach(() => {
@@ -82,6 +82,52 @@ describe('todoStore', () => {
       
       const { todos } = useTodoStore.getState()
       expect(todos).toHaveLength(0)
+    })
+
+    it('should not add more than 5 todos', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      // Add 5 todos
+      addTodo('Todo 1')
+      addTodo('Todo 2')
+      addTodo('Todo 3')
+      addTodo('Todo 4')
+      addTodo('Todo 5')
+      
+      const { todos: after5 } = useTodoStore.getState()
+      expect(after5).toHaveLength(5)
+      
+      // Try to add 6th todo
+      addTodo('Todo 6')
+      
+      const { todos: final } = useTodoStore.getState()
+      expect(final).toHaveLength(5)
+      expect(final.every(t => !t.text.includes('Todo 6'))).toBe(true)
+    })
+
+    it('should allow adding after deleting when at limit', () => {
+      const { addTodo, deleteTodo } = useTodoStore.getState()
+      
+      // Add 5 todos
+      for (let i = 1; i <= 5; i++) {
+        addTodo(`Todo ${i}`)
+      }
+      
+      const { todos: before } = useTodoStore.getState()
+      expect(before).toHaveLength(5)
+      
+      // Delete one
+      deleteTodo(before[0].id)
+      
+      const { todos: afterDelete } = useTodoStore.getState()
+      expect(afterDelete).toHaveLength(4)
+      
+      // Should be able to add again
+      addTodo('New Todo')
+      
+      const { todos: final } = useTodoStore.getState()
+      expect(final).toHaveLength(5)
+      expect(final.some(t => t.text === 'New Todo')).toBe(true)
     })
   })
 
@@ -358,6 +404,34 @@ describe('todoStore', () => {
     it('should return false when todos is empty', () => {
       const state = useTodoStore.getState()
       expect(selectHasCompleted(state)).toBe(false)
+    })
+  })
+
+  describe('selectIsAtLimit', () => {
+    it('should return true when todos count is 5', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      for (let i = 1; i <= 5; i++) {
+        addTodo(`Todo ${i}`)
+      }
+      
+      const state = useTodoStore.getState()
+      expect(selectIsAtLimit(state)).toBe(true)
+    })
+
+    it('should return false when todos count is less than 5', () => {
+      const { addTodo } = useTodoStore.getState()
+      
+      addTodo('Todo 1')
+      addTodo('Todo 2')
+      
+      const state = useTodoStore.getState()
+      expect(selectIsAtLimit(state)).toBe(false)
+    })
+
+    it('should return false when todos is empty', () => {
+      const state = useTodoStore.getState()
+      expect(selectIsAtLimit(state)).toBe(false)
     })
   })
 })
