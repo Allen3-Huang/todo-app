@@ -64,7 +64,7 @@ export function TodoApp() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>todos</h1>
+        <h1 className={styles.title}>待辦事項系統</h1>
       </header>
 
       <main className={styles.main}>
