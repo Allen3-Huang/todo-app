@@ -22,6 +22,7 @@ describe('Todo App Integration', () => {
     it('should complete a full todo workflow', async () => {
       const user = userEvent.setup()
       render(<TodoApp />)
+      expect(screen.getByRole('heading', { name: '待辦事項系統' })).toBeInTheDocument()
 
       // 1. 新增第一個 todo
       const input = screen.getByLabelText(/新增待辦事項/i)
